@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Todo App</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        font-family: Arial, sans-serif;
+      }
+
+      .todo-app {
+        background: #fff;
+        width: 350px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .input-box {
+        display: flex;
+        gap: 10px;
+      }
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        background: #667eea;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #5a67d8;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      li {
+        background: #f3f3f3;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.3s;
+      }
+
+      li:hover {
+        background: #e2e2e2;
+      }
+
+      li span {
+        cursor: pointer;
+      }
+
+      .completed {
+        text-decoration: line-through;
+        color: gray;
+      }
+
+      .delete {
+        background: red;
+        border: none;
+        color: white;
+        padding: 5px 8px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .delete:hover {
+        background: darkred;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="todo-app">
+      <h2>📝 My Todo List</h2>
+
+      <div class="input-box">
+        <input type="text" id="taskInput" placeholder="Enter your task" />
+        <button id="addBtn">Add</button>
+      </div>
+
+      <ul id="taskList"></ul>
+    </div>
+
+    <script>
+      const addBtn = document.getElementById("addBtn");
+      const taskInput = document.getElementById("taskInput");
+      const taskList = document.getElementById("taskList");
+
+      addBtn.addEventListener("click", function () {
+        if (taskInput.value.trim() === "") {
+          alert("Please enter a task");
+          return;
+        }
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <span>${taskInput.value}</span>
+            <button class="delete">✖</button>
+        `;
+
+        taskList.appendChild(li);
+        taskInput.value = "";
+      });
+
+      // Event Delegation
+      taskList.addEventListener("click", function (e) {
+        if (e.target.tagName === "SPAN") {
+          e.target.classList.toggle("completed");
+        }
+
+        if (e.target.classList.contains("delete")) {
+          e.target.parentElement.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
